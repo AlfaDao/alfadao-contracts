@@ -1,0 +1,35 @@
+node_modules
+.env
+coverage
+coverage.json
+typechain
+
+#Hardhat files
+cache
+artifacts
+scripts
+deployments
+
+.vscode/*
+!.vscode/settings.json.default
+!.vscode/launch.json.default
+!.vscode/extensions.json.default
+
+node_modules/
+.env
+yarn-error.log
+.package-lock.json
+
+.yalc
+yalc.lock
+
+contractsInfo.json
+deployments/**/solcInputs
+bin/contracts/mocks
+
+
+/.dapp
+
+# OpenZeppelin upgradeable files
+.openzeppelin/unknown-*.json
+/flatten
