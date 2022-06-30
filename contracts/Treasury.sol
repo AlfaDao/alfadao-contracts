@@ -80,10 +80,10 @@ contract AlfaTreasury is AlfaAccessControlled, ITreasury {
 
     uint256 public onChainGovernanceTimelock;
 
-    string internal notAccepted = 'Treasury: not accepted';
-    string internal notApproved = 'Treasury: not approved';
-    string internal invalidToken = 'Treasury: invalid token';
-    string internal insufficientReserves = 'Treasury: insufficient reserves';
+    string internal constant notAccepted = 'Treasury: not accepted';
+    string internal constant notApproved = 'Treasury: not approved';
+    string internal constant invalidToken = 'Treasury: invalid token';
+    string internal constant insufficientReserves = 'Treasury: insufficient reserves';
 
     /* ========== CONSTRUCTOR ========== */
 
@@ -382,7 +382,7 @@ contract AlfaTreasury is AlfaAccessControlled, ITreasury {
         address _address,
         address _calculator
     ) external onlyGovernor {
-        require(_address != address(0));
+        require(_address != address(0), '_address is 0 ');
         require(timelockEnabled == true, 'Timelock is disabled, use enable');
 
         uint256 timelock = block.number.add(blocksNeededForQueue);
@@ -457,6 +457,14 @@ contract AlfaTreasury is AlfaAccessControlled, ITreasury {
     }
 
     /**
+     * @notice enabled timelocked functions
+     */
+    function enabledTimelock() external onlyGovernor {
+        require(timelockEnabled == false, 'timelock already enabled');
+        timelockEnabled = true;
+    }
+
+    /**
      * @notice enables timelocks after initilization
      */
     function initialize() external onlyGovernor {
@@ -476,6 +484,7 @@ contract AlfaTreasury is AlfaAccessControlled, ITreasury {
         require(_initBond != address(0), 'Zero address: Bond');
         permissions[STATUS.RESERVEDEPOSITOR][_cAFAex] = true;
         permissions[STATUS.RESERVEMANAGER][_initBond] = true;
+        permissions[STATUS.REWARDMANAGER][_initBond] = true;
     }
 
     /* ========== VIEW FUNCTIONS ========== */
